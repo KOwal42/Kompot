@@ -23,6 +23,7 @@ public class Dodaj extends JPanel {
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
+		setSize(800,800);
 		
 		final JButton contentb1 = new JButton("New button");
 		GridBagConstraints gbc_contentb1 = new GridBagConstraints();

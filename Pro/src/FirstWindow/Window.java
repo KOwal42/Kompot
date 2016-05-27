@@ -11,6 +11,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import Kalendarz.Dodaj;
+import Kalendarz.Wyswietl;
+import Obsluga.DeserializacjiaXML;
+import Obsluga.Kasuj;
+import Obsluga.SerializacjiaXML;
+import Opcje.Opcje;
+
 
 
 public class Window extends JFrame {
@@ -19,7 +26,7 @@ public class Window extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu menuKalendarz, menuObsluga, menuOpcje, menuZapis, menuWczytaj;
 	private JMenuItem mWyswietl, mDodaj, mZapXML, mZapBaz, mWczXML, mWczBaz, mKasuj, mOProgramie,mOpcje,mWyjscie;
-	private JPanel panel;
+	private JPanel contentPane;
 	public static void main(String[] args) {
 		
 					Window frame = new Window();
@@ -116,11 +123,58 @@ public class Window extends JFrame {
 			Object z = e.getSource();
 			if(z == mWyswietl)
 			{
-				
+				Wyswietl cen = new Wyswietl();
+				contentPane = cen;
+				setContentPane(contentPane);
+				contentPane.setLayout(null);
+				cen.repaint();
 			}
 			if(z == mDodaj)
 			{
-				
+				Dodaj cen = new Dodaj();
+				contentPane = cen;
+				setContentPane(contentPane);
+				contentPane.setLayout(null);
+				cen.repaint();
+			}
+			if(z == mKasuj)
+			{
+				Kasuj cen = new Kasuj();
+				contentPane = cen;
+				setContentPane(contentPane);
+				contentPane.setLayout(null);
+				cen.repaint();
+			}
+			if(z == mZapXML)
+			{
+				SerializacjiaXML cen = new SerializacjiaXML();
+				contentPane = cen;
+				setContentPane(contentPane);
+				contentPane.setLayout(null);
+				cen.repaint();
+			}
+			if(z == mWczXML)
+			{
+				DeserializacjiaXML cen = new DeserializacjiaXML();
+				contentPane = cen;
+				setContentPane(contentPane);
+				contentPane.setLayout(null);
+				cen.repaint();
+			}if(z == mZapXML)
+			{
+				JOptionPane.showMessageDialog(null, "Doz zrobienia zapis do bazy");
+			}
+			if(z == mWczBaz)
+			{
+				JOptionPane.showMessageDialog(null, "Doz zrobienia wczytywanie z bazy");
+			}
+			if(z == mOpcje)
+			{
+				Opcje cen = new Opcje();
+				contentPane = cen;
+				setContentPane(contentPane);
+				contentPane.setLayout(null);
+				cen.repaint();
 			}
 			if(z == mOProgramie)
 			{

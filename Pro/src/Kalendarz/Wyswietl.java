@@ -7,6 +7,9 @@ import java.awt.GridBagConstraints;
 import java.awt.CardLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+
+import com.toedter.calendar.JCalendar;
+
 import java.awt.Insets;
 
 public class Wyswietl extends JPanel {
@@ -17,6 +20,7 @@ public class Wyswietl extends JPanel {
 	 */
 	public Wyswietl() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
+		setSize(500,500);
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -33,7 +37,7 @@ public class Wyswietl extends JPanel {
 		gbc_txtKalendarz.gridy = 3;
 		add(txtKalendarz, gbc_txtKalendarz);
 		txtKalendarz.setColumns(10);
-
+		setVisible(true);
 	}
 
 }
