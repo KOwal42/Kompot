@@ -34,6 +34,9 @@ public class Zdarzenie {
 	public void setData(Date data) {
 		this.data = data;
 	}
+	public List<Alarm> getList() {
+		return alarmy;
+	}
 	public Zdarzenie()
 	{
 		alarmy = new ArrayList<Alarm>();
@@ -45,5 +48,8 @@ public class Zdarzenie {
 	{
 	alarmy.add(a);	
 	}
-	
+	public int getAlarmCount()
+	{
+		return alarmy.size();
+	}
 }
