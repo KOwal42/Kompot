@@ -17,6 +17,11 @@ import Obsluga.DeserializacjiaXML;
 import Obsluga.Kasuj;
 import Obsluga.SerializacjiaXML;
 import Opcje.Opcje;
+import com.toedter.calendar.JCalendar;
+import java.awt.BorderLayout;
+import com.toedter.components.JSpinField;
+import com.toedter.calendar.JDayChooser;
+import com.toedter.components.JLocaleChooser;
 
 
 
@@ -114,6 +119,8 @@ public class Window extends JFrame {
 		menuOpcje.add(mOpcje);
 		menuOpcje.addSeparator();
 		menuOpcje.add(mWyjscie);
+		contentPane =  new Wyswietl();
+		setContentPane(contentPane);
 		
 	}
 	class ActionControle implements ActionListener
@@ -128,6 +135,8 @@ public class Window extends JFrame {
 				setContentPane(contentPane);
 				contentPane.setLayout(null);
 				cen.repaint();
+				setSize(cen.getSizey(),cen.getSizex());
+				contentPane.repaint();
 			}
 			if(z == mDodaj)
 			{
@@ -160,7 +169,7 @@ public class Window extends JFrame {
 				setContentPane(contentPane);
 				contentPane.setLayout(null);
 				cen.repaint();
-			}if(z == mZapXML)
+			}if(z == mZapBaz)
 			{
 				JOptionPane.showMessageDialog(null, "Doz zrobienia zapis do bazy");
 			}
@@ -175,6 +184,9 @@ public class Window extends JFrame {
 				setContentPane(contentPane);
 				contentPane.setLayout(null);
 				cen.repaint();
+				setSize(cen.getSizeX(),cen.getSizeX());
+				contentPane.repaint();
+				
 			}
 			if(z == mOProgramie)
 			{
