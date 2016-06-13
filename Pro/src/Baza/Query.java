@@ -48,7 +48,7 @@ public class Query {
 		String query="select nazwa, miejsce, opis, data from zdarzenia";
 		String queryA="select godzina from alarmy where id_z=";
 		Zdarzenie z=new Zdarzenie();
-		Alarm b = new Alarm("");
+		Alarm b = new Alarm(0,null);
 		Statement stmt = connection.createStatement();
 		ResultSet rs=stmt.executeQuery(query);
 		ResultSet rsA;

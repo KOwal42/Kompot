@@ -3,6 +3,7 @@ package FirstWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -11,17 +12,23 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import Baza.Utworz;
 import Kalendarz.Dodaj;
 import Kalendarz.Wyswietl;
-import Obsluga.DeserializacjiaXML;
 import Obsluga.Kasuj;
-import Obsluga.SerializacjiaXML;
+import Obsluga.XML;
 import Opcje.Opcje;
 import com.toedter.calendar.JCalendar;
 import java.awt.BorderLayout;
+import java.sql.SQLException;
+
 import com.toedter.components.JSpinField;
 import com.toedter.calendar.JDayChooser;
 import com.toedter.components.JLocaleChooser;
+
+import dane.ListaZdarzen;
+import dane.Opcjie;
+import dane.ZapisOpcji;
 
 
 
@@ -32,6 +39,8 @@ public class Window extends JFrame {
 	private JMenu menuKalendarz, menuObsluga, menuOpcje, menuZapis, menuWczytaj;
 	private JMenuItem mWyswietl, mDodaj, mZapXML, mZapBaz, mWczXML, mWczBaz, mKasuj, mOProgramie,mOpcje,mWyjscie;
 	private JPanel contentPane;
+	private XML xml;
+	private ListaZdarzen list;
 	public static void main(String[] args) {
 		
 					Window frame = new Window();
@@ -42,6 +51,27 @@ public class Window extends JFrame {
 	 * Create the frame.
 	 */
 	public Window() {
+		xml= new XML();
+		list = new ListaZdarzen();
+		/*try {
+			Utworz.create();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		ZapisOpcji zapisOpcji = new ZapisOpcji();
+		Opcjie op = new Opcjie(zapisOpcji.Deserialize());
+		if(op.getWybur()!=0)
+		{
+			if(op.getWybur()==1)
+			{
+				
+			}
+			else
+			{
+				list = xml.Deserializacjia();
+			}
+		}
 		actionControle = new ActionControle();
 		setTitle("Organizator");
 		setSize(800,800);
@@ -59,6 +89,7 @@ public class Window extends JFrame {
 
 		menuObsluga = new JMenu("Obs³uga");
 		menuZapis  = new JMenu("Zapisz");
+		
 		
 		mZapXML  = new JMenuItem("Zapisz do XML", 'X');
 		mZapXML.addActionListener(actionControle);
@@ -119,7 +150,7 @@ public class Window extends JFrame {
 		menuOpcje.add(mOpcje);
 		menuOpcje.addSeparator();
 		menuOpcje.add(mWyjscie);
-		contentPane =  new Wyswietl();
+		contentPane =  new Wyswietl(list);
 		setContentPane(contentPane);
 		
 	}
@@ -130,7 +161,7 @@ public class Window extends JFrame {
 			Object z = e.getSource();
 			if(z == mWyswietl)
 			{
-				Wyswietl cen = new Wyswietl();
+				Wyswietl cen = new Wyswietl(list);
 				contentPane = cen;
 				setContentPane(contentPane);
 				contentPane.setLayout(null);
@@ -140,36 +171,37 @@ public class Window extends JFrame {
 			}
 			if(z == mDodaj)
 			{
-				Dodaj cen = new Dodaj();
+				Dodaj cen = new Dodaj(list);
 				contentPane = cen;
 				setContentPane(contentPane);
 				contentPane.setLayout(null);
+				setSize(cen.getSizex(),cen.getSizex());
 				cen.repaint();
 			}
 			if(z == mKasuj)
 			{
-				Kasuj cen = new Kasuj();
+				Kasuj cen = new Kasuj(list);
 				contentPane = cen;
 				setContentPane(contentPane);
 				contentPane.setLayout(null);
+				setSize(cen.getX()+300,cen.getX());
 				cen.repaint();
+				contentPane.repaint();
 			}
 			if(z == mZapXML)
 			{
-				SerializacjiaXML cen = new SerializacjiaXML();
-				contentPane = cen;
-				setContentPane(contentPane);
-				contentPane.setLayout(null);
-				cen.repaint();
+				JFileChooser fc =new JFileChooser();
+				if(fc.showOpenDialog(null)== JFileChooser.APPROVE_OPTION)
+				{
+					
+				}
+				xml.Serializacjia(list);
 			}
-			if(z == mWczXML)
+			if(z ==  mWczXML)
 			{
-				DeserializacjiaXML cen = new DeserializacjiaXML();
-				contentPane = cen;
-				setContentPane(contentPane);
-				contentPane.setLayout(null);
-				cen.repaint();
-			}if(z == mZapBaz)
+				list = xml.Deserializacjia();
+			}
+			if(z == mZapBaz)
 			{
 				JOptionPane.showMessageDialog(null, "Doz zrobienia zapis do bazy");
 			}
