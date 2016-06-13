@@ -1,41 +1,31 @@
 package Kalendarz;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SpinnerDateModel;
-
-import java.awt.GridBagLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
-import javax.swing.JButton;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 
 import com.toedter.calendar.JDateChooser;
 
 import dane.ListaZdarzen;
 import dane.Zdarzenie;
 
-import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
-import java.awt.CardLayout;
-import java.awt.Font;
-import java.util.Calendar;
-import java.util.Date;
+public class Modyfikuj extends JPanel {
 
-import javax.swing.JSpinner;
-import javax.swing.JList;
-import javax.swing.JComboBox;
-import javax.swing.JTextArea;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
-
-public class Dodaj extends JPanel {
-	private ListaZdarzen  lista;
 	private int sizex = 500;
 	private JTextField txtWybierzDate;
 	private JTextField txtPodajMiejsce;
@@ -53,13 +43,42 @@ public class Dodaj extends JPanel {
 	private JComboBox comboBox_2;
 	private JTextArea textArea;
 	private Date date;
-	private JButton btnNewButton;
+	private JButton btnZapis;
 	private JDateChooser dateChooser;
 	private JTextField txtPodajNazwe;
 	private JTextField textField_1;
-	public Dodaj(ListaZdarzen list) 
+	private Zdarzenie e;
+	private JButton btnZapis_1;
+
+	public int getSizex() {
+		return sizex;
+	}
+	public void setSizex(int sizex) {
+		this.sizex = sizex;
+	}
+	private void DodajAlarm(Zdarzenie e, String o)
 	{
-		lista = list;
+		if("15 minut"==o)
+		{
+			e.addAlarm(15);
+		}
+		if("30 minut"==o)
+		{
+			e.addAlarm(30);
+		}
+		if("45 minut"==o)
+		{
+			e.addAlarm(45);
+		}
+		if("1 godzina"==o)
+		{
+			e.addAlarm(60);
+		}
+		
+	}
+	public Modyfikuj(Zdarzenie z)
+	{
+		e=z;
 		setSize(sizex,sizex);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {60, 60, 60, 60, 60, 60, 60, 60, 60, 0};
@@ -102,6 +121,7 @@ public class Dodaj extends JPanel {
 		gbc_textField_1.gridx = 3;
 		gbc_textField_1.gridy = 3;
 		add(textField_1, gbc_textField_1);
+		textField_1.setText(e.getNazwa());
 		textField_1.setColumns(10);
 		
 		txtWybierzDate = new JTextField();
@@ -124,7 +144,7 @@ public class Dodaj extends JPanel {
 		gbc_dateChooser.gridx = 3;
 		gbc_dateChooser.gridy = 4;
 		add(dateChooser, gbc_dateChooser);
-		dateChooser.setDate(new Date());
+		dateChooser.setDate(e.getData());
 		
 		txtAlarmy = new JTextField();
 		txtAlarmy.setEditable(false);
@@ -158,6 +178,7 @@ public class Dodaj extends JPanel {
 		miejsce.gridx = 3;
 		miejsce.gridy = 5;
 		add(textField, miejsce);
+		textField.setText(e.getMiejsce());
 		textField.setColumns(10);
 		
 		textField_2 = new JTextField();
@@ -196,7 +217,7 @@ public class Dodaj extends JPanel {
 		gbc_txtPodajGodzine.gridy = 6;
 		add(txtPodajGodzine, gbc_txtPodajGodzine);
 		txtPodajGodzine.setColumns(10);
-		date = dateChooser.getDate();
+		date = e.getData();
 		SpinnerDateModel sm =new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
 		spinner = new JSpinner(sm);
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
@@ -287,6 +308,7 @@ public class Dodaj extends JPanel {
 		opis.gridx = 3;
 		opis.gridy = 7;
 		add(textArea, opis);
+		textArea.setText(e.getOpis());
 		
 		textField_4 = new JTextField();
 		textField_4.setEditable(false);
@@ -312,67 +334,38 @@ public class Dodaj extends JPanel {
 		comboBox_2.addItem("45 minut");
 		comboBox_2.addItem("1 godzina");
 		
-		btnNewButton = new JButton("Dodaj zdarzenie");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.gridwidth = 2;
-		gbc_btnNewButton.gridheight = 2;
-		gbc_btnNewButton.fill = GridBagConstraints.VERTICAL;
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 3;
-		gbc_btnNewButton.gridy = 9;
-		add(btnNewButton, gbc_btnNewButton);
-		btnNewButton.addActionListener(new ActionListener(){
+		btnZapis_1 = new JButton("Zapis");
+		GridBagConstraints gbc_btnZapis_1 = new GridBagConstraints();
+		gbc_btnZapis_1.fill = GridBagConstraints.BOTH;
+		gbc_btnZapis_1.gridwidth = 2;
+		gbc_btnZapis_1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnZapis_1.gridx = 3;
+		gbc_btnZapis_1.gridy = 9;
+		add(btnZapis_1, gbc_btnZapis_1);
+		btnZapis_1.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(arg0.getSource() == btnNewButton){
+				if(arg0.getSource() == btnZapis_1){
 					Date zapis = dateChooser.getDate();
 					Date hour = (Date) spinner.getValue();
 					zapis.setHours(hour.getHours());
 					zapis.setMinutes(hour.getMinutes());
 					zapis.setSeconds(hour.getSeconds());
-					Zdarzenie zdarzenie = new Zdarzenie();
-					zdarzenie.setNazwa(textField_1.getText());
-					zdarzenie.setMiejsce(textField.getText());
-					zdarzenie.setOpis(textArea.getText());
-					zdarzenie.setData( zapis);
-					DodajAlarm(zdarzenie,comboBox.getSelectedItem().toString());
-					DodajAlarm(zdarzenie,comboBox_1.getSelectedItem().toString());
-					DodajAlarm(zdarzenie,comboBox_2.getSelectedItem().toString());
+					e.setNazwa(textField_1.getText());
+					e.setMiejsce(textField.getText());
+					e.setOpis(textArea.getText());
+					e.setData( zapis);
+					DodajAlarm(e,comboBox.getSelectedItem().toString());
+					DodajAlarm(e,comboBox_1.getSelectedItem().toString());
+					DodajAlarm(e,comboBox_2.getSelectedItem().toString());
 					System.out.println(zapis);
-					lista.add(zdarzenie);
 				}
 			}
 			
 		});
 
-	}
 
-	public int getSizex() {
-		return sizex;
-	}
-	public void setSizex(int sizex) {
-		this.sizex = sizex;
-	}
-	private void DodajAlarm(Zdarzenie e, String o)
-	{
-		if("15 minut"==o)
-		{
-			e.addAlarm(15);
-		}
-		if("30 minut"==o)
-		{
-			e.addAlarm(30);
-		}
-		if("45 minut"==o)
-		{
-			e.addAlarm(45);
-		}
-		if("1 godzina"==o)
-		{
-			e.addAlarm(60);
-		}
-		
 	}
 
 }

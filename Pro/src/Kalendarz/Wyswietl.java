@@ -9,15 +9,20 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+
+import FirstWindow.ModyfikujOnko;
 
 import com.toedter.calendar.JCalendar;
 
 import dane.ListaZdarzen;
 import dane.Opcjie;
 import dane.ZapisOpcji;
+import dane.Zdarzenie;
 
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -37,12 +42,14 @@ public class Wyswietl extends JPanel {
 	private ButtonGroup domSortowanie;
 	private JCheckBox data,miejsce,nazwa;
 	private JButton btnNewButton;
+	private JButton btnNewButton_1;
 	private JCalendar calendar;
 	private int  sizex = 460;
 	private int  sizey = 700;
-	private JButton btnWyswietlWszystkie;
-	private JList jlist;
+	private JList<Zdarzenie> jlist;
 	private JScrollPane scrol;
+	private JPopupMenu popup;
+	private JMenuItem modyfikuj;
 	public int getSizey() {
 		return sizey;
 	}
@@ -75,12 +82,24 @@ public class Wyswietl extends JPanel {
 			
 		});
 		
-		JButton btnNewButton_1 = new JButton("Sortuj");
+		btnNewButton_1 = new JButton("Sortuj");
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_1.gridx = 8;
 		gbc_btnNewButton_1.gridy = 2;
 		add(btnNewButton_1, gbc_btnNewButton_1);
+		btnNewButton_1.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(arg0.getSource() == btnNewButton_1)
+				{
+					jlist.setModel(lista.ChoseDate(calendar.getDate()));
+				}
+			}
+			
+		});
 		domSortowanie.add(nazwa);
 		GridBagConstraints gbc_nazwa = new GridBagConstraints();
 		gbc_nazwa.insets = new Insets(0, 0, 5, 5);
@@ -146,36 +165,29 @@ public class Wyswietl extends JPanel {
 			}
 		});
 		
-		jlist = new JList();
-		GridBagConstraints gbc_list = new GridBagConstraints();
-		gbc_list.insets = new Insets(0, 0, 5, 5);
-		gbc_list.gridwidth = 5;
-		gbc_list.gridheight = 4;
-		gbc_list.fill = GridBagConstraints.BOTH;
-		gbc_list.gridx = 8;
-		gbc_list.gridy = 3;
+		jlist = new JList<Zdarzenie>();
+		jlist.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		scrol = new JScrollPane(jlist);
 		GridBagConstraints gbc_scrol = new GridBagConstraints();
+		gbc_scrol.fill = GridBagConstraints.BOTH;
 		gbc_scrol.gridy = 3;
 		gbc_scrol.gridx = 8;
 		gbc_scrol.gridwidth = 5;
 		gbc_scrol.gridheight = 4;
 		add(scrol, gbc_scrol);
-		//add(jlist, gbc_list);
-		//jlist.add(lista);
-		
-		btnWyswietlWszystkie = new JButton("Wyswietl wszystkie");
-		GridBagConstraints gbc_btnWyswietlWszystkie = new GridBagConstraints();
-		gbc_btnWyswietlWszystkie.anchor = GridBagConstraints.NORTH;
-		gbc_btnWyswietlWszystkie.gridwidth = 3;
-		gbc_btnWyswietlWszystkie.insets = new Insets(0, 0, 0, 5);
-		gbc_btnWyswietlWszystkie.gridx = 4;
-		gbc_btnWyswietlWszystkie.gridy = 7;
-		add(btnWyswietlWszystkie, gbc_btnWyswietlWszystkie);
-		
-		
-		
-	}
+		popup  = new JPopupMenu();
+		modyfikuj = new JMenuItem("Modyfikuj");
+		modyfikuj.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				ModyfikujOnko ok =new  ModyfikujOnko(jlist.getSelectedValue());
+				ok.show();
+			}
+			
+		});
+		popup.add(modyfikuj);
+	}	
 	public int getSizex() {
 		return sizex;
 	}

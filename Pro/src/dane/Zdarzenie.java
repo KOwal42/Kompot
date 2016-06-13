@@ -55,9 +55,7 @@ public class Zdarzenie {
 	}
 	@Override
 	public String toString() {
-		return "Zdarzenie [miejsce=" + miejsce
-				+ ", opis=" + opis + ", data=" + data + ", nazwa=" + nazwa
-				+ "]";
+		return "Nazwa: "+nazwa+"\n Miejsce: "+miejsce+"\n Data: "+data+"\n Opis: "+opis;
 	}
 	
 }

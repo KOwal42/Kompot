@@ -14,6 +14,7 @@ import javax.swing.KeyStroke;
 
 import Baza.Utworz;
 import Kalendarz.Dodaj;
+import Kalendarz.WszystkieZdarzenia;
 import Kalendarz.Wyswietl;
 import Obsluga.Kasuj;
 import Obsluga.XML;
@@ -29,6 +30,8 @@ import com.toedter.components.JLocaleChooser;
 import dane.ListaZdarzen;
 import dane.Opcjie;
 import dane.ZapisOpcji;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
 
 
 
@@ -41,6 +44,7 @@ public class Window extends JFrame {
 	private JPanel contentPane;
 	private XML xml;
 	private ListaZdarzen list;
+	private JMenuItem mntmWyswietlWsztstkieZdarzenia;
 	public static void main(String[] args) {
 		
 					Window frame = new Window();
@@ -128,6 +132,11 @@ public class Window extends JFrame {
 		menuBar.add(menuKalendarz);
 		
 		menuKalendarz.add(mWyswietl);
+		
+		mntmWyswietlWsztstkieZdarzenia = new JMenuItem("Wyswietl wsztstkie zdarzenia",'z');
+		mntmWyswietlWsztstkieZdarzenia.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK));
+		mntmWyswietlWsztstkieZdarzenia.addActionListener(actionControle);
+		menuKalendarz.add(mntmWyswietlWsztstkieZdarzenia);
 		menuKalendarz.addSeparator();
 		menuKalendarz.add(mDodaj);
 		
@@ -154,6 +163,16 @@ public class Window extends JFrame {
 		setContentPane(contentPane);
 		
 	}
+	public void Modyfikacjia()
+	{
+		Wyswietl cen = new Wyswietl(list);
+		contentPane = cen;
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		cen.repaint();
+		setSize(cen.getSizey(),cen.getSizex());
+		contentPane.repaint();
+	}
 	class ActionControle implements ActionListener
 	{
 		@Override
@@ -167,6 +186,16 @@ public class Window extends JFrame {
 				contentPane.setLayout(null);
 				cen.repaint();
 				setSize(cen.getSizey(),cen.getSizex());
+				contentPane.repaint();
+			}
+			if(z == mntmWyswietlWsztstkieZdarzenia)
+			{
+				WszystkieZdarzenia cen = new WszystkieZdarzenia(list);
+				contentPane = cen;
+				setContentPane(contentPane);
+				contentPane.setLayout(null);
+				cen.repaint();
+				setSize(cen.getSizex(),cen.getSizex());
 				contentPane.repaint();
 			}
 			if(z == mDodaj)
@@ -184,7 +213,7 @@ public class Window extends JFrame {
 				contentPane = cen;
 				setContentPane(contentPane);
 				contentPane.setLayout(null);
-				setSize(cen.getX()+300,cen.getX());
+				setSize(cen.getSizex(),cen.getSizex());
 				cen.repaint();
 				contentPane.repaint();
 			}
@@ -240,5 +269,4 @@ public class Window extends JFrame {
 		}
 		
 	}
-
 }

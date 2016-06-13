@@ -40,14 +40,16 @@ public class ListaZdarzen {
 		zdarzenia.sort(new SortowanieData());
 	}
 	public void UsunZdarzenia(Date date) {
+		System.out.println(zdarzenia);
+		List<Zdarzenie> remove = new ArrayList<Zdarzenie>();
 		for(Zdarzenie e:zdarzenia)
 		{
 			if(e.getData().before(date)==true)
 			{
-				zdarzenia.remove(e);
-				delete(e);
+				remove.add(e);
 			}
 		}
+		zdarzenia.removeAll(remove);
 	}
 	public DefaultListModel<Zdarzenie> ChoseDate(Date date)
 	{
@@ -83,5 +85,9 @@ public class ListaZdarzen {
 			dane.addElement(e);
 		}
 		return dane;
+	}
+	public List<Zdarzenie> getZdarzenia()
+	{
+		return zdarzenia;
 	}
 }
