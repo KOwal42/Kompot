@@ -15,7 +15,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-
+/**
+ * Klasa odpowiedzialna za wyœwietlanie okienka umo¿liwiaj¹cego usuwanie zdarzeñ sprzed podanej daty.
+ * U¿ytkownik wybiera datê i po naciœniêciu przycisku usuñ, z listy usuwane s¹ te zdarzenia,
+ * które spe³niaj¹ warunek.
+ *
+ */
 public class Kasuj extends JPanel {
 	private JTextField txtUsuniZdarzeniaZ;
 	private int sizex = 300;
@@ -29,8 +34,9 @@ public class Kasuj extends JPanel {
 		this.sizex = sizex;
 	}
 	/**
-	 * Create the panel.
-	 * @param list 
+	 * Konstruktor klasy Kasuj inicjalizuj¹ca pocz¹tkowy rozmiar i
+	 * po³o¿enie elementów interfejsu.
+	 * @param list Klasa ListaZdarzen przechowuj¹ca zdarzenia u¿ytkownika.
 	 */
 	public Kasuj(ListaZdarzen list) {
 		setSize(sizex,sizex);

@@ -6,11 +6,28 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+/**
+ * Klasa odpowiedzialna za utworzenie wewnêtrznej bazy danych przechowuj¹cej
+ * listê zdarzeñ.
+ * @see ListaZdarzen
+ *
+ */
 public class Utworz {
-
+	/**
+	 * Œcie¿ka do sterownika.
+	 */
 	public static final String DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+	/**
+	 * Œcie¿ka po³¹czenia.
+	 */
 	public static final String JDBC_URL = "jdbc:derby:prodb;create=true";
+	/**
+	 * Funkcja odpowiedzialna za utworzenie tablic w bazie danych przechowywuj¹cych dane z listy.
+	 * Nawi¹zuje po³¹czanie z baz¹ danych i wywo³uje zapytania sql dotycz¹ce tworzenia tablic.
+	 * Nastêpnie wywo³uje funkcjê check
+	 * @see Utworz
+	 * @see Utworz#checkTables()
+	 */
 	public static void create() 
 	{
 		try
@@ -30,6 +47,10 @@ public class Utworz {
 		}
 		
 	}
+	/**
+	 * Funkcja sprawdzaj¹ca, czy tablice zosta³y utworzone poprzez wypisanie tablic w konsoli.
+	 * @see Utworz
+	 */
 	private static void checkTables() 
 	{
 		try
