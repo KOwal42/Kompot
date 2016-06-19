@@ -156,4 +156,11 @@ public class ListaZdarzen {
 	{
 		return zdarzenia;
 	}
+	public void alarm(Date tym) {
+		// TODO Auto-generated method stub
+		for(Zdarzenie z :zdarzenia)
+		{
+			z.informacjie(tym);
+		}
+	}
 }

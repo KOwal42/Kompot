@@ -55,4 +55,45 @@ public class Alarm {
 		return null;
 	}
 
+	public boolean czas(Date tym) {
+		// TODO Auto-generated method stub
+		if(this.date.getYear()==tym.getYear())
+		{
+			if(this.date.getMonth()==tym.getMonth())
+			{
+				if(this.date.getDay()==tym.getDay())
+				{
+					if(this.date.getHours()==tym.getHours())
+					{
+						if(this.date.getMinutes()==tym.getMinutes())
+						{
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+
 }

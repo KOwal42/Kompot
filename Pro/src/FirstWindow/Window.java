@@ -23,6 +23,7 @@ import Opcje.Opcje;
 import com.toedter.calendar.JCalendar;
 import java.awt.BorderLayout;
 import java.sql.SQLException;
+import java.util.Date;
 
 import com.toedter.components.JSpinField;
 import com.toedter.calendar.JDayChooser;
@@ -158,6 +159,11 @@ public class Window extends JFrame {
 		menuOpcje.add(mWyjscie);
 		contentPane =  new Wyswietl(list);
 		setContentPane(contentPane);
+		while(true)
+		{
+			Date tym = new Date();
+			list.alarm(tym);
+		}
 		
 	}
 	public void Modyfikacjia()
@@ -187,6 +193,8 @@ public class Window extends JFrame {
 			}
 			if(z == mntmWyswietlWsztstkieZdarzenia)
 			{
+				if(list.NotZero()==true)
+				{
 				WszystkieZdarzenia cen = new WszystkieZdarzenia(list);
 				contentPane = cen;
 				setContentPane(contentPane);
@@ -194,6 +202,11 @@ public class Window extends JFrame {
 				cen.repaint();
 				setSize(cen.getSizex(),cen.getSizex());
 				contentPane.repaint();
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null,"Brak Zdarzen");
+				}
 			}
 			if(z == mDodaj)
 			{
@@ -216,11 +229,6 @@ public class Window extends JFrame {
 			}
 			if(z == mZapXML)
 			{
-				JFileChooser fc =new JFileChooser();
-				if(fc.showOpenDialog(null)== JFileChooser.APPROVE_OPTION)
-				{
-					
-				}
 				xml.Serializacjia(list);
 			}
 			if(z ==  mWczXML)

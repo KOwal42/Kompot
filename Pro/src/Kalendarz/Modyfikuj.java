@@ -103,13 +103,13 @@ public class Modyfikuj extends JPanel {
 		gridBagLayout.columnWidths = new int[] {60, 60, 60, 60, 60, 60, 60, 60, 60, 0};
 		gridBagLayout.rowHeights = new int[] {30, 30, 30, 30, 0, 30, 30, 30, 30, 30, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		txtDodajNoweZdarzenie = new JTextField();
 		txtDodajNoweZdarzenie.setEditable(false);
 		txtDodajNoweZdarzenie.setFont(new Font("Source Sans Pro", Font.PLAIN, 18));
-		txtDodajNoweZdarzenie.setText("Dodaj nowe zdarzenie");
+		txtDodajNoweZdarzenie.setText("Zmodyfikuj zdarzenie");
 		GridBagConstraints gbc_txtDodajNoweZdarzenie = new GridBagConstraints();
 		gbc_txtDodajNoweZdarzenie.gridheight = 2;
 		gbc_txtDodajNoweZdarzenie.gridwidth = 4;
@@ -388,3 +388,4 @@ public class Modyfikuj extends JPanel {
 	}
 
 }
+

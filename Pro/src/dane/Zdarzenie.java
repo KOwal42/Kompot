@@ -3,6 +3,8 @@ package dane;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 /**
  * Klasa przechowuj¹ca informacje dotycz¹ce zdarzenia.
  * 
@@ -137,6 +139,19 @@ public class Zdarzenie {
 	 */
 	public String toString() {
 		return "Nazwa: "+nazwa+"\n Miejsce: "+miejsce+"\n Data: "+data+"\n Opis: "+opis;
+	}
+	public void informacjie(Date tym) {
+		// TODO Auto-generated method stub
+		if(alarmy.isEmpty()==false)
+		{
+			for(Alarm a :alarmy)
+			{
+				if(a.czas(tym)==true)
+				{
+					JOptionPane.showMessageDialog(null,this.toString());
+				}
+			}
+		}
 	}
 	
 }
