@@ -26,7 +26,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 /**
  * Klasa odpowiedzialna za wyœwietlanie okna z list¹ wszystkich
- * zdarzeñ zainicjowanych przez u¿ytkownika. Po klikniêciu na dowolne zdarzenie prawym przyciskiem u¿ytkownik ma mo¿liwoœæ
+ * zdarzeñ zainicjowanych przez u¿ytkownika.
+ * Okienko pozwala równie¿ na posortowanie listy wed³ug nazwy, daty i miejsca.
+ * Po klikniêciu na dowolne zdarzenie prawym przyciskiem u¿ytkownik ma mo¿liwoœæ
  * modyfikacji wybranego zdarzenia.
  * Otwiera siê wtedy okienko Modyfikuj w którym siê wprowadza zmiany.
  * @see Modyfikuj
@@ -55,6 +57,7 @@ public class WszystkieZdarzenia extends JPanel {
 	 * elementów interfejsu. Nastêpnie wypisuje na liœcie wszystkie zdarzenia wprowadzone przez u¿ytkownika.
 	 * 
 	 * @param list Klasa ListaZdarzen
+	 * @see WszystkieZdarzenia
 	 * @see ListaZdarzen
 	 */
 	public WszystkieZdarzenia(ListaZdarzen list) {

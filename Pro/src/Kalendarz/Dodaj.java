@@ -33,7 +33,13 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
-
+/**
+ * Klasa odpowiedzialna za wyœwietlanie okienka Dodaj pozwalaj¹ce na
+ * dodanie nowego Zdarzenia do listy i podanie wszystkich paramatrów go opisuj¹ce.
+ * @see Zdarzenie
+ * @see ListaZdarzen
+ *
+ */
 public class Dodaj extends JPanel {
 	private ListaZdarzen  lista;
 	private int sizex = 500;
@@ -57,6 +63,13 @@ public class Dodaj extends JPanel {
 	private JDateChooser dateChooser;
 	private JTextField txtPodajNazwe;
 	private JTextField textField_1;
+	/**
+	 * Konstruktor klasy Dodaj inicjalizuj¹ca pocz¹tkowy rozmiar i
+	 * po³o¿enie elementów interfejsu
+	 * @param list Klasa ListaZdarzen
+	 * @see ListaZdarzen
+	 * @see Dodaj
+	 */
 	public Dodaj(ListaZdarzen list) 
 	{
 		lista = list;
@@ -354,6 +367,14 @@ public class Dodaj extends JPanel {
 	public void setSizex(int sizex) {
 		this.sizex = sizex;
 	}
+	/**
+	 * Funkcja odpowiedzialna za dodawanie alarmów do zdarzenia poprzez interfejs
+	 * okienka Modyfikuj
+	 * @param e Zdarzenie, do którego s¹ dodawane alarmy
+	 * @param o zmienna przechowuj¹ca wartoœæ wybran¹ przez u¿ytkownika
+	 * @see Zdarzenie
+	 * @see Alarm
+	 */
 	private void DodajAlarm(Zdarzenie e, String o)
 	{
 		if("15 minut"==o)

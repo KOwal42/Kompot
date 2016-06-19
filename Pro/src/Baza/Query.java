@@ -15,8 +15,9 @@ public class Query {
 	
 	public static final String DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 	public static final String JDBC_URL = "jdbc:derby:prodb;create=true";
-	public void addZdarzenia(ListaZdarzen l) throws SQLException
+	public void addZdarzenia(ListaZdarzen l)
 	{
+	try{
 		Connection connection=DriverManager.getConnection(JDBC_URL);
 		connection.createStatement().executeQuery("truncate table alarmy");
 		connection.createStatement().executeQuery("truncate table zdarzenia");
@@ -39,34 +40,43 @@ public class Query {
 			}
 		}
 		if(connection !=null)connection.close();
+	}
+	catch(SQLException e){
+		return;
+	}
 		
 	}
-	public void getZdarzenia(List<Zdarzenie> a) throws SQLException
+	public void getZdarzenia(List<Zdarzenie> a)
 	{
-		Connection connection=DriverManager.getConnection(JDBC_URL);
-		String query="select nazwa, miejsce, opis, data from zdarzenia";
-		String queryA="select godzina from alarmy where id_z=";
-		Zdarzenie z=new Zdarzenie();
-		Alarm b = new Alarm(0,null);
-		Statement stmt = connection.createStatement();
-		ResultSet rs=stmt.executeQuery(query);
-		ResultSet rsA;
-		while (rs.next())
-		{
-			z.setNazwa(rs.getString("nazwa"));
-			z.setMiejsce(rs.getString("miejsce"));
-			z.setOpis(rs.getString("opis"));
-			z.setData(rs.getDate("data"));
-			rsA=stmt.executeQuery(queryA+rs.getInt("id_z"));
-			while(rsA.next())
+		try{
+			Connection connection=DriverManager.getConnection(JDBC_URL);
+			String query="select nazwa, miejsce, opis, data from zdarzenia";
+			String queryA="select godzina from alarmy where id_z=";
+			Zdarzenie z=new Zdarzenie();
+			Alarm b = new Alarm(0,null);
+			Statement stmt = connection.createStatement();
+			ResultSet rs=stmt.executeQuery(query);
+			ResultSet rsA;
+			while (rs.next())
 			{
-				b.setGodzina(rsA.getString("godzina"));
-				z.getList().add(b);
+				z.setNazwa(rs.getString("nazwa"));
+				z.setMiejsce(rs.getString("miejsce"));
+				z.setOpis(rs.getString("opis"));
+				z.setData(rs.getDate("data"));
+				rsA=stmt.executeQuery(queryA+rs.getInt("id_z"));
+				while(rsA.next())
+				{
+					b.setGodzina(rsA.getString("godzina"));
+					z.getList().add(b);
+				}
+				a.add(z);
 			}
-			a.add(z);
+			if(stmt!=null){stmt.close();}
+			if(connection!=null){connection.close();}
 		}
-		if(stmt!=null){stmt.close();}
-		if(connection!=null){connection.close();}
+		catch(SQLException e){
+			return;
+		}
 		
 		
 	}

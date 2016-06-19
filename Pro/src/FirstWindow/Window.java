@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import Baza.Utworz;
+import Baza.Query;
 import Kalendarz.Dodaj;
 import Kalendarz.WszystkieZdarzenia;
 import Kalendarz.Wyswietl;
@@ -43,6 +44,7 @@ public class Window extends JFrame {
 	private JMenuItem mWyswietl, mDodaj, mZapXML, mZapBaz, mWczXML, mWczBaz, mKasuj, mOProgramie,mOpcje,mWyjscie;
 	private JPanel contentPane;
 	private XML xml;
+	private Query query;
 	private ListaZdarzen list;
 	private JMenuItem mntmWyswietlWsztstkieZdarzenia;
 	public static void main(String[] args) {
@@ -57,12 +59,7 @@ public class Window extends JFrame {
 	public Window() {
 		xml= new XML();
 		list = new ListaZdarzen();
-		/*try {
-			Utworz.create();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		Utworz.create();
 		ZapisOpcji zapisOpcji = new ZapisOpcji();
 		Opcjie op = new Opcjie(zapisOpcji.Deserialize());
 		if(op.getWybur()!=0)
@@ -232,11 +229,11 @@ public class Window extends JFrame {
 			}
 			if(z == mZapBaz)
 			{
-				JOptionPane.showMessageDialog(null, "Doz zrobienia zapis do bazy");
+				query.addZdarzenia(list);
 			}
 			if(z == mWczBaz)
 			{
-				JOptionPane.showMessageDialog(null, "Doz zrobienia wczytywanie z bazy");
+				query.getZdarzenia(list.getZdarzenia());
 			}
 			if(z == mOpcje)
 			{

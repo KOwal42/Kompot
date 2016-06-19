@@ -23,7 +23,11 @@ import com.toedter.calendar.JDateChooser;
 
 import dane.ListaZdarzen;
 import dane.Zdarzenie;
-
+/**
+ * Klasa odpowiedzialna za wyœwietlanie okienka modyfikuj pozwalaj¹ce na
+ * modyfikacjê wszystkich parametrów wybranego zdarzenia.
+ *
+ */
 public class Modyfikuj extends JPanel {
 
 	private int sizex = 500;
@@ -56,6 +60,14 @@ public class Modyfikuj extends JPanel {
 	public void setSizex(int sizex) {
 		this.sizex = sizex;
 	}
+	/**
+	 * Funkcja odpowiedzialna za dodawanie alarmów do zdarzenia poprzez interfejs
+	 * okienka Modyfikuj
+	 * @param e Zdarzenie, do którego s¹ dodawane alarmy
+	 * @param o zmienna przechowuj¹ca wartoœæ wybran¹ przez u¿ytkownika
+	 * @see Zdarzenie
+	 * @see Alarm
+	 */
 	private void DodajAlarm(Zdarzenie e, String o)
 	{
 		if("15 minut"==o)
@@ -76,6 +88,13 @@ public class Modyfikuj extends JPanel {
 		}
 		
 	}
+	/**
+	 * Konstruktor klasy Modyfikuj inicjalizuj¹ca pocz¹tkowy rozmiar i
+	 * po³o¿enie elementów interfejsu
+	 * @param z Modyfikowane Zdarzenie
+	 * @see Modyfikuj
+	 * @see Zdarzenie
+	 */
 	public Modyfikuj(Zdarzenie z)
 	{
 		e=z;
