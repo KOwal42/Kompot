@@ -24,7 +24,15 @@ import dane.Zdarzenie;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Klasa odpowiedzialna za wyœwietlanie okna z list¹ wszystkich
+ * zdarzeñ zainicjowanych przez u¿ytkownika. Po klikniêciu na dowolne zdarzenie prawym przyciskiem u¿ytkownik ma mo¿liwoœæ
+ * modyfikacji wybranego zdarzenia.
+ * Otwiera siê wtedy okienko Modyfikuj w którym siê wprowadza zmiany.
+ * @see Modyfikuj
+ * 
+ *
+ */
 public class WszystkieZdarzenia extends JPanel {
 	private ButtonGroup domSortowanie;
 	private JCheckBox data,miejsce,nazwa;
@@ -42,7 +50,13 @@ public class WszystkieZdarzenia extends JPanel {
 	public void setSizex(int sizex) {
 		this.sizex = sizex;
 	}
-
+	/**
+	 * Konstruktor klasy WszystkieZdarzenia inicjuj¹ca pocz¹tkowy rozmiar i rozmieszczenie
+	 * elementów interfejsu. Nastêpnie wypisuje na liœcie wszystkie zdarzenia wprowadzone przez u¿ytkownika.
+	 * 
+	 * @param list Klasa ListaZdarzen
+	 * @see ListaZdarzen
+	 */
 	public WszystkieZdarzenia(ListaZdarzen list) {
 		setSize(485,350);
 		lista = list;

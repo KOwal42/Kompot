@@ -3,7 +3,10 @@ package sortowanie;
 import java.util.Comparator;
 
 import dane.Zdarzenie;
-
+/**
+ * Klasa sortuj¹ca listê typu Zdarzenie po polu miejsce.
+ * @see Zdarzenie
+ */
 public class SortowanieMiejsce  implements Comparator<Zdarzenie>{
 
 	@Override
