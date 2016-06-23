@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import java.awt.GridBagLayout;
 import java.awt.BorderLayout;
@@ -15,6 +16,9 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.JToggleButton;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import FirstWindow.ModyfikujOnko;
 
@@ -24,6 +28,7 @@ import dane.Zdarzenie;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 /**
  * Klasa odpowiedzialna za wyœwietlanie okna z list¹ wszystkich
  * zdarzeñ zainicjowanych przez u¿ytkownika.
@@ -37,13 +42,13 @@ import java.awt.event.ActionListener;
  */
 public class WszystkieZdarzenia extends JPanel {
 	private ButtonGroup domSortowanie;
-	private JCheckBox data,miejsce,nazwa;
 	private ListaZdarzen lista;
-	private JList<Zdarzenie> jlist;
+	private JTable jlist;
 	private JScrollPane scrol;
 	private JPopupMenu popup;
 	private JMenuItem modyfikuj;
-	private int sizex= 350;
+	private int sizex= 500;
+	private Vector dane, colum;
 	
 	public int getSizex() {
 		return sizex;
@@ -61,7 +66,12 @@ public class WszystkieZdarzenia extends JPanel {
 	 * @see ListaZdarzen
 	 */
 	public WszystkieZdarzenia(ListaZdarzen list) {
-		setSize(485,350);
+		dane = new Vector();
+		colum =new Vector();
+		colum.add("Nazwa");
+		colum.add("Miejsce");
+		colum.add("Data");
+		setSize(sizex,sizex);
 		lista = list;
 		domSortowanie = new ButtonGroup();
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -70,76 +80,47 @@ public class WszystkieZdarzenia extends JPanel {
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 1.0};
 		setLayout(gridBagLayout);
-		nazwa = new JCheckBox("Nazwa", true);
-		GridBagConstraints gbc_nazwa = new GridBagConstraints();
-		gbc_nazwa.insets = new Insets(0, 0, 5, 5);
-		gbc_nazwa.gridx = 1;
-		gbc_nazwa.gridy = 1;
-		add(nazwa, gbc_nazwa);
-		nazwa.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				lista.sortujNazwa();
-				jlist.setModel(lista.ChoseAll());
-			}
-			
-		});
-		domSortowanie.add(nazwa);
-		data = new JCheckBox("Data");
-		data.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				lista.sortujData();
-				jlist.setModel(lista.ChoseAll());
-			}
-			
-		});
-		GridBagConstraints gbc_data = new GridBagConstraints();
-		gbc_data.insets = new Insets(0, 0, 5, 5);
-		gbc_data.gridx = 2;
-		gbc_data.gridy = 1;
-		add(data, gbc_data);
-		domSortowanie.add(data);
-		
-		miejsce = new JCheckBox("Miejsce");
-		miejsce.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				lista.sortujMiejsce();
-				jlist.setModel(lista.ChoseAll());
-			}
-			
-		});
-		domSortowanie.add(miejsce);
-		GridBagConstraints gbc_miejsce = new GridBagConstraints();
-		gbc_miejsce.insets = new Insets(0, 0, 5, 5);
-		gbc_miejsce.gridx = 3;
-		gbc_miejsce.gridy = 1;
-		add(miejsce, gbc_miejsce);
-		jlist = new JList<Zdarzenie>(lista.ChoseAll());
-		scrol = new JScrollPane(jlist);
-		GridBagConstraints gbc_scrol = new GridBagConstraints();
-		gbc_scrol.fill = GridBagConstraints.BOTH;
-		gbc_scrol.insets = new Insets(0, 0, 5, 5);
-		gbc_scrol.gridy = 2;
-		gbc_scrol.gridx = 1;
-		gbc_scrol.gridwidth = 5;
-		gbc_scrol.gridheight = 3;
-		add(scrol, gbc_scrol);
+		lista = list;
+		dane = list.ChoseAll();
+		TableModel model = new DefaultTableModel(dane,colum);
+		TableRowSorter<TableModel> sort = new TableRowSorter<TableModel>(model);
 		popup  = new JPopupMenu();
 		modyfikuj = new JMenuItem("Modyfikuj");
 		modyfikuj.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				ModyfikujOnko ok =new  ModyfikujOnko(jlist.getSelectedValue());
-				ok.show();
+				boolean select=false;
+				for(int z = 0; z<jlist.getRowCount();z++)
+				{
+					if(jlist.isRowSelected(z)== true)
+					{
+						select=true;
+					}
+				}
+				if(select==true)
+				{
+					ModyfikujOnko ok =new  ModyfikujOnko(lista.find((String)jlist.getValueAt(jlist.getSelectedRow(), 0),(String)jlist.getValueAt(jlist.getSelectedRow(), 1),(String)jlist.getValueAt(jlist.getSelectedRow(), 2)));
+					ok.show();
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null,"Brak wybranego zdarzenia");
+				}
 			}
 			
 		});
 		popup.add(modyfikuj);
+		jlist = new JTable(model);
+		jlist.setRowSorter(sort);
+		scrol = new JScrollPane(jlist);
+		GridBagConstraints gbc_scrol = new GridBagConstraints();
+		gbc_scrol.fill = GridBagConstraints.BOTH;
+		gbc_scrol.insets = new Insets(0, 0, 5, 5);
+		gbc_scrol.gridy = 1;
+		gbc_scrol.gridx = 0;
+		gbc_scrol.gridwidth = 7;
+		gbc_scrol.gridheight = 5;
+		add(scrol, gbc_scrol);
 		jlist.setComponentPopupMenu(popup);
 		
 			 

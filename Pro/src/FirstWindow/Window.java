@@ -18,6 +18,7 @@ import Kalendarz.Dodaj;
 import Kalendarz.WszystkieZdarzenia;
 import Kalendarz.Wyswietl;
 import Obsluga.Kasuj;
+import Obsluga.Wywo³anie;
 import Obsluga.XML;
 import Opcje.Opcje;
 import com.toedter.calendar.JCalendar;
@@ -58,6 +59,8 @@ public class Window extends JFrame {
 	 * Create the frame.
 	 */
 	public Window() {
+		
+        
 		xml= new XML();
 		list = new ListaZdarzen();
 		Utworz.create();
@@ -159,11 +162,9 @@ public class Window extends JFrame {
 		menuOpcje.add(mWyjscie);
 		contentPane =  new Wyswietl(list);
 		setContentPane(contentPane);
-		while(true)
-		{
-			Date tym = new Date();
-			list.alarm(tym);
-		}
+		Runnable runners = new Wywo³anie(list);
+		Thread threads = new Thread(runners);
+		threads.start();
 		
 	}
 	public void Modyfikacjia()

@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import FirstWindow.ModyfikujOnko;
 
@@ -32,8 +33,12 @@ import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Vector;
 
 import javax.swing.JList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Wyswietl extends JPanel {
 	private Opcjie op;
@@ -44,23 +49,30 @@ public class Wyswietl extends JPanel {
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
 	private JCalendar calendar;
-	private int  sizex = 460;
+	private int  sizex = 600;
 	private int  sizey = 700;
-	private JList<Zdarzenie> jlist;
+	private JTable jlist;
 	private JScrollPane scrol;
 	private JPopupMenu popup;
 	private JMenuItem modyfikuj;
+	private Vector dane, colum;
+
 	public int getSizey() {
 		return sizey;
 	}
 	public Wyswietl(ListaZdarzen list) {
+		dane = new Vector();
+		colum =new Vector();
+		colum.add("Nazwa");
+		colum.add("Miejsce");
+		colum.add("Data");
 		lista = list;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		domSortowanie = new ButtonGroup();
 		setSize(sizex,sizey);
 		gridBagLayout.columnWidths = new int[] {100, 30, 100, 30, 30, 30, 30, 30, 0, 30, 29, 30, 30, 30};
 		gridBagLayout.rowHeights = new int[] {30, 30, 30, 30, 30, 100, 100, 60, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
@@ -72,70 +84,7 @@ public class Wyswietl extends JPanel {
 		gbc_btnNewButton.gridx = 2;
 		gbc_btnNewButton.gridy = 2;
 		add(btnNewButton, gbc_btnNewButton);
-		nazwa = new JCheckBox("Nazwa", true);
-		nazwa.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				lista.sortujNazwa();
-			}
-			
-		});
 		
-		btnNewButton_1 = new JButton("Sortuj");
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_1.gridx = 8;
-		gbc_btnNewButton_1.gridy = 2;
-		add(btnNewButton_1, gbc_btnNewButton_1);
-		btnNewButton_1.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				if(arg0.getSource() == btnNewButton_1)
-				{
-					jlist.setModel(lista.ChoseDate(calendar.getDate()));
-				}
-			}
-			
-		});
-		domSortowanie.add(nazwa);
-		GridBagConstraints gbc_nazwa = new GridBagConstraints();
-		gbc_nazwa.insets = new Insets(0, 0, 5, 5);
-		gbc_nazwa.gridx = 10;
-		gbc_nazwa.gridy = 2;
-		add(nazwa, gbc_nazwa);
-		miejsce = new JCheckBox("Miejsce");
-		miejsce.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				lista.sortujMiejsce();
-			}
-			
-		});
-		domSortowanie.add(miejsce);
-		GridBagConstraints gbc_miejsce = new GridBagConstraints();
-		gbc_miejsce.insets = new Insets(0, 0, 5, 5);
-		gbc_miejsce.gridx = 11;
-		gbc_miejsce.gridy = 2;
-		add(miejsce, gbc_miejsce);
-		data = new JCheckBox("Data");
-		data.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				lista.sortujData();
-			}
-			
-		});
-		GridBagConstraints gbc_data = new GridBagConstraints();
-		gbc_data.insets = new Insets(0, 0, 5, 5);
-		gbc_data.gridx = 12;
-		gbc_data.gridy = 2;
-		add(data, gbc_data);
-		domSortowanie.add(data);
 		
 		calendar = new JCalendar();
 		calendar.setTodayButtonVisible(true);
@@ -154,8 +103,12 @@ public class Wyswietl extends JPanel {
 				{
 					if(lista.NotZero()== true)
 					{
-						jlist.setModel(lista.ChoseDate(calendar.getDate()));
-						System.out.println(lista.ChoseDate(calendar.getDate()));
+						dane=lista.ChoseDate(calendar.getDate());
+						DefaultTableModel model = (DefaultTableModel) jlist.getModel();
+						for(int  z=0 ;z <dane.size();z++)
+						{
+							model.addRow(new Object[]{((Vector) dane.get(z)).get(0),((Vector) dane.get(z)).get(1),((Vector) dane.get(z)).get(2),});
+						}				
 					}
 					else
 					{
@@ -164,15 +117,17 @@ public class Wyswietl extends JPanel {
 				}
 			}
 		});
-		
-		jlist = new JList<Zdarzenie>();
-		jlist.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		TableModel model = new DefaultTableModel(dane,colum);
+		TableRowSorter<TableModel> sort = new TableRowSorter<TableModel>(model);
+		jlist = new JTable(model);
+		jlist.setRowSorter(sort);
 		scrol = new JScrollPane(jlist);
 		GridBagConstraints gbc_scrol = new GridBagConstraints();
+		gbc_scrol.insets = new Insets(0, 0, 5, 0);
 		gbc_scrol.fill = GridBagConstraints.BOTH;
 		gbc_scrol.gridy = 3;
 		gbc_scrol.gridx = 8;
-		gbc_scrol.gridwidth = 5;
+		gbc_scrol.gridwidth = 6;
 		gbc_scrol.gridheight = 4;
 		add(scrol, gbc_scrol);
 		popup  = new JPopupMenu();
@@ -181,12 +136,28 @@ public class Wyswietl extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				ModyfikujOnko ok =new  ModyfikujOnko(jlist.getSelectedValue());
-				ok.show();
+				boolean select=false;
+				for(int z = 0; z<jlist.getRowCount();z++)
+				{
+					if(jlist.isRowSelected(z)== true)
+					{
+						select=true;
+					}
+				}
+				if(select==true)
+				{
+					ModyfikujOnko ok =new  ModyfikujOnko(lista.find((String)jlist.getValueAt(jlist.getSelectedRow(), 0),(String)jlist.getValueAt(jlist.getSelectedRow(), 1),(String)jlist.getValueAt(jlist.getSelectedRow(), 2)));
+					ok.show();
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null,"Brak wybranego zdarzenia");
+				}
 			}
 			
 		});
 		popup.add(modyfikuj);
+		jlist.setComponentPopupMenu(popup);
 	}	
 	public int getSizex() {
 		return sizex;

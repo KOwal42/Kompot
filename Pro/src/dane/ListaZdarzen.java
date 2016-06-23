@@ -3,6 +3,7 @@ package dane;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.DefaultListModel;
 
@@ -106,17 +107,21 @@ public class ListaZdarzen {
 	 * @see Zdarzenie
 	 * @see zdarzenia
 	 */
-	public DefaultListModel<Zdarzenie> ChoseDate(Date date)
+	public Vector<Vector<String>> ChoseDate(Date date)
 	{
-		DefaultListModel<Zdarzenie> dane = new DefaultListModel<>();
+		Vector<Vector<String>> row = new Vector<Vector<String>>();
 		for(Zdarzenie e:zdarzenia)
 		{
 			if(e.getData().getDay()==date.getDay()&&e.getData().getYear()==date.getYear()&&e.getData().getMonth()==date.getMonth())
 			{
-				dane.addElement(e);
+				Vector<String> colum = new Vector<String>();
+				colum.add(e.getNazwa());
+				colum.add(e.getMiejsce());
+				colum.add(e.getData().toString());
+				row.add(colum);
 			}
 		}
-		return dane;
+		return row;
 	}
 	@Override
 	public String toString() {
@@ -137,14 +142,18 @@ public class ListaZdarzen {
 			return true;
 		}
 	}
-	public DefaultListModel<Zdarzenie> ChoseAll()
+	public Vector<Vector<String>> ChoseAll()
 	{
-		DefaultListModel<Zdarzenie> dane = new DefaultListModel<>();
+		Vector<Vector<String>> row = new Vector<Vector<String>>();
 		for(Zdarzenie e:zdarzenia)
 		{
-			dane.addElement(e);
+			Vector<String> colum = new Vector<String>();
+			colum.add(e.getNazwa());
+			colum.add(e.getMiejsce());
+			colum.add(e.getData().toString());
+			row.add(colum);
 		}
-		return dane;
+		return row;
 	}
 	/**
 	 * Funkcja zwracaj¹ca listê zdarzenia.
@@ -162,5 +171,37 @@ public class ListaZdarzen {
 		{
 			z.informacjie(tym);
 		}
+	}
+	public Zdarzenie find(String name, String polozenie, String data) {
+		// TODO Auto-generated method stub
+		Zdarzenie a = null;
+		Vector<Zdarzenie> wybrane = new Vector<Zdarzenie>();
+		Vector<Zdarzenie> wybrane1 = new Vector<Zdarzenie>();
+		for(Zdarzenie e:zdarzenia)
+		{
+			if(e.getNazwa()==name)
+			{
+				System.out.println("true name");
+				wybrane.add(e);
+				if(wybrane.size()==1){
+					a=wybrane.get(0);
+				}
+				else
+				{
+					for(Zdarzenie z:wybrane)
+					{
+						if(e.getNazwa()==polozenie)
+						{
+							System.out.println("true miejsce");
+							wybrane1.add(z);
+							if(wybrane1.size()==1){
+								a=wybrane1.get(0);
+							}
+						}
+					}
+				}
+			}
+		}
+		return a;
 	}
 }
