@@ -10,12 +10,24 @@ import javax.swing.border.EmptyBorder;
 import Kalendarz.Modyfikuj;
 
 import dane.Zdarzenie;
-
+/**
+ * Klasa odpowiedzialna za wyœwietlanie okienka umo¿liwiaj¹cego modyfikacjê zdarzenia.
+ * @see Modyfikuj
+ * @see Zdarzenie
+ *
+ */
 public class ModyfikujOnko extends JFrame {
-
-	private JPanel contentPane;
 	/**
 	 * Create the frame.
+	 */
+	private JPanel contentPane;
+	/**
+	 * Konstruktor klasy ModyfikujOnko wykorzystuj¹cy klasê Modyfikuj.
+	 * 
+	 * @param e Modyfikowane Zdarzenie
+	 * @see ModyfikujOkno
+	 * @see Modyfikuj
+	 * @see Zdarzenie
 	 */
 	public ModyfikujOnko(Zdarzenie e) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

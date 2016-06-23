@@ -37,7 +37,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
 
 
-
+/**
+ * G³ówna klasa odpowiedzialna za wyœwietlanie i obs³ugê programu.
+ * @author Daniel Kowalski
+ * @author Pawe³ Winiecki
+ * @see ModyfikujOnko
+ * @see Dodaj
+ * @see WszystkieZdarzenia
+ * @see Wyswietl
+ */
 public class Window extends JFrame {
 	
 	private ActionControle actionControle;
@@ -56,7 +64,8 @@ public class Window extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Konstruktor klasy Window tworz¹cy g³ówne okienko programu wraz z panelem kalendarza i podstawowych poleceñ.
+	 * @see Window
 	 */
 	public Window() {
 		
@@ -167,6 +176,10 @@ public class Window extends JFrame {
 		threads.start();
 		
 	}
+	/**
+	 * Funkcja wywo³uj¹ca okienko Wyswietl i umo¿liwiaj¹ca zmianê jego rozmiaru.
+	 * @see Wyswietl
+	 */
 	public void Modyfikacjia()
 	{
 		Wyswietl cen = new Wyswietl(list);
@@ -177,6 +190,12 @@ public class Window extends JFrame {
 		setSize(cen.getSizey(),cen.getSizex());
 		contentPane.repaint();
 	}
+	/**
+	 * Klasa odpowiedzialna za obs³ugê akcji wywo³anych przez u¿ytkownika.
+	 * @see Wyswietl
+	 * 
+	 *
+	 */
 	class ActionControle implements ActionListener
 	{
 		@Override

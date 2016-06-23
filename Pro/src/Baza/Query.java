@@ -10,11 +10,23 @@ import java.util.List;
 import dane.Alarm;
 import dane.ListaZdarzen;
 import dane.Zdarzenie;
-
+/**
+ * Klasa obs³uguj¹ca zapytania sql do bazy danych, które zapisuj¹ i 
+ * odzczytuj¹ dane zawarte w klasie ListaZdarzen
+ * @see ListaZdarzen
+ *
+ */
 public class Query {
 	
 	public static final String DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 	public static final String JDBC_URL = "jdbc:derby:prodb;create=true";
+	/**
+	 * Klasa zapisuj¹ca dane z klasy ListaZdarzen do tablic w bazie danych.
+	 * Nawi¹zuje po³¹czenie z baz¹ danych, po czym zapisuje zdarzenia przy pomocy pêtli do tablicy.
+	 * @param l Klasa ListaZdarzeñ zawieraj¹ca zdarzenia stworzone przez u¿ytkownika.
+	 * @see Query
+	 * @see ListaZdarzen
+	 */
 	public void addZdarzenia(ListaZdarzen l)
 	{
 	try{
@@ -46,6 +58,14 @@ public class Query {
 	}
 		
 	}
+	/**
+	 * Klasa odczytuj¹ca dane z bazy danych do klasy ListaZdarzen.
+	 * Nawi¹zuje po³¹czenie z baz¹ danych, po czym odczytuje zdarzenia przy pomocy pêtli do listy.
+	 * @param a lista typu Zdarzenie z klasy ListaZdarzen
+	 * @see Query
+	 * @see ListaZdarzen
+	 * @see ListaZdarzen#getZdarzenia()
+	 */
 	public void getZdarzenia(List<Zdarzenie> a)
 	{
 		try{
