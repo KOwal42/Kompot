@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.List;
 
 import dane.Alarm;
@@ -19,7 +20,7 @@ import dane.Zdarzenie;
 public class Query {
 	
 	public static final String DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-	public static final String JDBC_URL = "jdbc:derby:prodb;create=true";
+	public static final String JDBC_URL = "jdbc:derby:C:/Users/Daniel/workspace/Projekt/prodb";
 	/**
 	 * Klasa zapisuj¹ca dane z klasy ListaZdarzen do tablic w bazie danych.
 	 * Nawi¹zuje po³¹czenie z baz¹ danych, po czym zapisuje zdarzenia przy pomocy pêtli do tablicy.
@@ -31,30 +32,37 @@ public class Query {
 	{
 	try{
 		Connection connection=DriverManager.getConnection(JDBC_URL);
+		Statement sta = connection.createStatement();
+		Statement sta2 = connection.createStatement();
 		connection.createStatement().executeQuery("truncate table alarmy");
 		connection.createStatement().executeQuery("truncate table zdarzenia");
-		Zdarzenie z = new Zdarzenie();
-		for(int i=0;i<l.getZdarzenia().size();i++)
+		int i=0;
+		int k=0;
+		for(Zdarzenie z: l.getZdarzenia())
 		{
 			
-			connection.createStatement().execute("insert into zdarzenia values ('"+i
+			sta.executeUpdate("insert into zdarzenia (id_z, nazwa, miejsce, opis, data) values ('"+i
 					+"', '"+z.getNazwa()
 					+"', '"+z.getMiejsce()
 					+"', '"+z.getOpis()
 					+"', '"+z.getData()
 					+"')");
-
-			for(int j = 0; j<z.getAlarmCount(); i++)
+			for(int j = 0; j<z.getAlarmCount(); j++)
 			{
-					connection.createStatement().execute("insert into alarmy values('"+j
+					sta2.executeUpdate("insert into alarmy (id_a, data, id_z) values('"+k
 							+"', '"+z.getList().get(j).getDate()
-							+"', '"+j);
+							+"', '"+i);
+					k++;
 			}
+			i++;
 		}
+		if(sta !=null)sta.close();
+		if(sta2 !=null)sta2.close();
 		if(connection !=null)connection.close();
 	}
 	catch(SQLException e){
-		return;
+		System.out.println(e.getMessage());
+		System.out.println(e.getNextException());
 	}
 		
 	}
@@ -66,14 +74,14 @@ public class Query {
 	 * @see ListaZdarzen
 	 * @see ListaZdarzen#getZdarzenia()
 	 */
-	public void getZdarzenia(List<Zdarzenie> a)
+	public void getZdarzenia(ListaZdarzen a)
 	{
 		try{
 			Connection connection=DriverManager.getConnection(JDBC_URL);
 			String query="select nazwa, miejsce, opis, data from zdarzenia";
-			String queryA="select godzina from alarmy where id_z=";
+			String queryA="select godzina from alarmy where id_z=x`";
 			Zdarzenie z=new Zdarzenie();
-			Alarm b = new Alarm(0,null);
+			Alarm b = new Alarm(0,new Date(2016,6,12));
 			Statement stmt = connection.createStatement();
 			ResultSet rs=stmt.executeQuery(query);
 			ResultSet rsA;
@@ -95,7 +103,9 @@ public class Query {
 			if(connection!=null){connection.close();}
 		}
 		catch(SQLException e){
-			return;
+			System.out.println(e.getMessage());
+			System.out.println(e.getNextException());
+
 		}
 		
 		

@@ -20,7 +20,7 @@ public class Utworz {
 	/**
 	 * Œcie¿ka po³¹czenia.
 	 */
-	public static final String JDBC_URL = "jdbc:derby:prodb;create=true";
+	public static final String JDBC_URL = "jdbc:derby:C:/Users/Daniel/workspace/Projekt/prodb;create=true";
 	/**
 	 * Funkcja odpowiedzialna za utworzenie tablic w bazie danych przechowywuj¹cych dane z listy.
 	 * Nawi¹zuje po³¹czanie z baz¹ danych i wywo³uje zapytania sql dotycz¹ce tworzenia tablic.

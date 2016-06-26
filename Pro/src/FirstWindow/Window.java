@@ -65,6 +65,7 @@ public class Window extends JFrame {
 		
         
 		xml= new XML();
+		query = new Query();
 		list = new ListaZdarzen();
 		isc = new ISC();
 		Utworz.create();
@@ -74,7 +75,7 @@ public class Window extends JFrame {
 		{
 			if(op.getWybur()==1)
 			{
-				query.getZdarzenia(list.getZdarzenia());
+				query.getZdarzenia(list);
 			}
 			else
 			{
@@ -251,7 +252,7 @@ public class Window extends JFrame {
 			}
 			if(z == mWczBaz)
 			{
-				query.getZdarzenia(list.getZdarzenia());
+				query.getZdarzenia(list);
 			}
 			if(z==mntmZapiszDoIsc)
 			{
