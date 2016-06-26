@@ -12,6 +12,7 @@ public class Alarm {
 	 * @see Alarm
 	 */
 	private Date date;
+	private int time;
 	/**
 	 * Konstruktor klasy Alarm.
 	 * Argument i okreœla na ile minut przed dat¹ zdarzenia ma siê uruchomiæ alarm.
@@ -25,6 +26,7 @@ public class Alarm {
 	 */
 	public Alarm(int i,Date date) {
 		this.date=date;
+		this.setTime(i);
 		int minut = this.date.getMinutes();
 		if(i<60)
 		{
@@ -94,6 +96,14 @@ public class Alarm {
 			return false;
 		}
 		
+	}
+
+	public int getTime() {
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
 	}
 
 }

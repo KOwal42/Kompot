@@ -223,6 +223,29 @@ public class Modyfikuj extends JPanel {
 		comboBox.addItem("30 minut");
 		comboBox.addItem("45 minut");
 		comboBox.addItem("1 godzina");
+		if(z.getList().size()!=0)
+		{
+			int p=z.getList().get(0).getTime();
+			{
+				if(p==15)
+				{
+					comboBox.setSelectedIndex(1);
+				}
+				if(p==30)
+				{
+					comboBox.setSelectedIndex(2);
+				}
+				if(p==45)
+				{
+					comboBox.setSelectedIndex(3);
+				}
+				if(p==60)
+				{
+					comboBox.setSelectedIndex(4);
+				}
+			}
+			z.getList().remove(0);
+		}
 		
 		
 		txtPodajGodzine = new JTextField();
@@ -304,6 +327,29 @@ public class Modyfikuj extends JPanel {
 		comboBox_1.addItem("30 minut");
 		comboBox_1.addItem("45 minut");
 		comboBox_1.addItem("1 godzina");
+		if(z.getList().size()>1)
+		{
+			int p=z.getList().get(1).getTime();
+			{
+				if(p==15)
+				{
+					comboBox_1.setSelectedIndex(1);
+				}
+				if(p==30)
+				{
+					comboBox_1.setSelectedIndex(2);
+				}
+				if(p==45)
+				{
+					comboBox_1.setSelectedIndex(3);
+				}
+				if(p==60)
+				{
+					comboBox_1.setSelectedIndex(4);
+				}
+			}
+			z.getList().remove(1);
+		}
 		
 		txtPodajOpis = new JTextField();
 		txtPodajOpis.setEditable(false);
@@ -352,6 +398,29 @@ public class Modyfikuj extends JPanel {
 		comboBox_2.addItem("30 minut");
 		comboBox_2.addItem("45 minut");
 		comboBox_2.addItem("1 godzina");
+		if(z.getList().size()>2)
+		{
+			int p=z.getList().get(2).getTime();
+			{
+				if(p==15)
+				{
+					comboBox_2.setSelectedIndex(1);
+				}
+				if(p==30)
+				{
+					comboBox_2.setSelectedIndex(2);
+				}
+				if(p==45)
+				{
+					comboBox_2.setSelectedIndex(3);
+				}
+				if(p==60)
+				{
+					comboBox_2.setSelectedIndex(4);
+				}
+			}
+			z.getList().remove(2);
+		}
 		
 		btnZapis_1 = new JButton("Zapis");
 		GridBagConstraints gbc_btnZapis_1 = new GridBagConstraints();

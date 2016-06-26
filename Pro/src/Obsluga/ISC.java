@@ -18,6 +18,7 @@ import net.fortuna.ical4j.model.TimeZone;
 import net.fortuna.ical4j.model.TimeZoneRegistry;
 import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
 import net.fortuna.ical4j.model.ValidationException;
+import net.fortuna.ical4j.model.component.VAlarm;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VTimeZone;
 import net.fortuna.ical4j.model.parameter.Cn;
@@ -65,8 +66,8 @@ public class ISC {
 					startDate1.set(java.util.Calendar.HOUR_OF_DAY, z.getDate().getHours());
 					startDate1.set(java.util.Calendar.MINUTE, z.getDate().getMinutes());
 					startDate1.set(java.util.Calendar.SECOND, z.getDate().getSeconds());
-					VEvent zdarznie1 = new VEvent(new DateTime(startDate1.getTime()),"Alarm");
-					zdarznie.getAlarms().add(zdarznie1);
+					VAlarm alarm= new VAlarm(new DateTime(startDate1.getTime()));
+					zdarznie.getAlarms().add(alarm);
 				}
 			}
 			calendare.getComponents().add(zdarznie);
@@ -77,7 +78,7 @@ public class ISC {
 		{
 		FileOutputStream fout;
 		try {
-			fout = new FileOutputStream("mileFile.isc");
+			fout = new FileOutputStream(fc.getSelectedFile());
 			CalendarOutputter outputter = new CalendarOutputter();
 			  outputter.setValidating(false);
 				outputter.output(calendare, fout);
