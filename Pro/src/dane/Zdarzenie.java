@@ -153,5 +153,9 @@ public class Zdarzenie {
 			}
 		}
 	}
+	public String dane() {
+		String dane = "Nazwa: "+this.nazwa+" Miejsce: "+this.miejsce+" Opis: "+this.opis;
+		return dane;
+	}
 	
 }

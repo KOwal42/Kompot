@@ -24,7 +24,7 @@ import com.toedter.calendar.JDateChooser;
 import dane.ListaZdarzen;
 import dane.Zdarzenie;
 /**
- * Klasa odpowiedzialna za wyœwietlanie panelu modyfikuj pozwalaj¹ce na
+ * Klasa odpowiedzialna za wyœwietlanie okienka modyfikuj pozwalaj¹ce na
  * modyfikacjê wszystkich parametrów wybranego zdarzenia.
  *
  */

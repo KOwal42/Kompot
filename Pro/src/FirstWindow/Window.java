@@ -17,6 +17,7 @@ import Baza.Query;
 import Kalendarz.Dodaj;
 import Kalendarz.WszystkieZdarzenia;
 import Kalendarz.Wyswietl;
+import Obsluga.ISC;
 import Obsluga.Kasuj;
 import Obsluga.Wywo³anie;
 import Obsluga.XML;
@@ -37,15 +38,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
 
 
-/**
- * G³ówna klasa odpowiedzialna za wyœwietlanie i obs³ugê programu.
- * @author Daniel Kowalski
- * @author Pawe³ Winiecki
- * @see ModyfikujOnko
- * @see Dodaj
- * @see WszystkieZdarzenia
- * @see Wyswietl
- */
+
 public class Window extends JFrame {
 	
 	private ActionControle actionControle;
@@ -57,6 +50,8 @@ public class Window extends JFrame {
 	private Query query;
 	private ListaZdarzen list;
 	private JMenuItem mntmWyswietlWsztstkieZdarzenia;
+	private JMenuItem mntmZapiszDoIsc;
+	private ISC isc;
 	public static void main(String[] args) {
 		
 					Window frame = new Window();
@@ -64,14 +59,14 @@ public class Window extends JFrame {
 	}
 
 	/**
-	 * Konstruktor klasy Window tworz¹cy g³ówne okienko programu wraz z panelem kalendarza i podstawowych poleceñ.
-	 * @see Window
+	 * Create the frame.
 	 */
 	public Window() {
 		
         
 		xml= new XML();
 		list = new ListaZdarzen();
+		isc = new ISC();
 		Utworz.create();
 		ZapisOpcji zapisOpcji = new ZapisOpcji();
 		Opcjie op = new Opcjie(zapisOpcji.Deserialize());
@@ -79,7 +74,7 @@ public class Window extends JFrame {
 		{
 			if(op.getWybur()==1)
 			{
-				
+				query.getZdarzenia(list.getZdarzenia());
 			}
 			else
 			{
@@ -156,6 +151,11 @@ public class Window extends JFrame {
 		menuZapis.add(mZapXML);
 		menuZapis.add(mZapBaz);
 		
+		mntmZapiszDoIsc = new JMenuItem("Zapisz do ISC",'I');
+		mntmZapiszDoIsc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK));
+		mntmZapiszDoIsc.addActionListener(actionControle);
+		menuZapis.add(mntmZapiszDoIsc);
+		
 		menuObsluga.add(menuWczytaj);
 
 		menuWczytaj.add(mWczXML);
@@ -176,10 +176,6 @@ public class Window extends JFrame {
 		threads.start();
 		
 	}
-	/**
-	 * Funkcja wywo³uj¹ca okienko Wyswietl i umo¿liwiaj¹ca zmianê jego rozmiaru.
-	 * @see Wyswietl
-	 */
 	public void Modyfikacjia()
 	{
 		Wyswietl cen = new Wyswietl(list);
@@ -190,12 +186,6 @@ public class Window extends JFrame {
 		setSize(cen.getSizey(),cen.getSizex());
 		contentPane.repaint();
 	}
-	/**
-	 * Klasa odpowiedzialna za obs³ugê akcji wywo³anych przez u¿ytkownika.
-	 * @see Wyswietl
-	 * 
-	 *
-	 */
 	class ActionControle implements ActionListener
 	{
 		@Override
@@ -262,6 +252,10 @@ public class Window extends JFrame {
 			if(z == mWczBaz)
 			{
 				query.getZdarzenia(list.getZdarzenia());
+			}
+			if(z==mntmZapiszDoIsc)
+			{
+				isc.serialize(list);
 			}
 			if(z == mOpcje)
 			{
